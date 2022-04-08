@@ -1,0 +1,21 @@
+{
+  "name": "klaytn-minting-website-main",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "remix": "remixd -s C:/Users/sangw/Desktop/WG-contract-main --remix-ide https://ide.klaytn.com"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "caver-js": "^1.8.1",
+    "caver-js-ext-kas": "^1.9.0",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "express-rate-limit": "^6.3.0"
+  }
+}
