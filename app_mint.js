@@ -58,8 +58,6 @@ app.post("/checkwhitelist", (req, res) => {
 
 app.post("/checkspecial", (req, res) => {
   var data = req.body.data;
-
-  console.log(data);
   res.send({ result: isSpecial(String(data)) });
 });
 
@@ -89,8 +87,9 @@ function isWhiteList(_inputAddress) {
     let dataST = String(data).substr(0, 42);
     if (String(dataST).toUpperCase() == _inputAddress.toUpperCase()) {
       return true;
+    } else {
+      return false;
     }
-    return false;
   }
 }
 
@@ -104,6 +103,8 @@ function isSpecial(_inputAddress) {
     console.log(String(dataST).toUpperCase() == _inputAddress.toUpperCase());
     if (String(dataST).toUpperCase() == _inputAddress.toUpperCase()) {
       return true;
-    } else return false;
+    } else {
+      return false;
+    }
   }
 }
