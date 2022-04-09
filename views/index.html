@@ -48,11 +48,15 @@
     <footer style="text-align: center"></footer>
     <script>
       document.addEventListener("DOMContentLoaded", async function (event) {
-        const accounts = await klaytn.enable();
-        if (!accounts) {
+        try {
+          const accounts = await klaytn.enable();
+          if (!accounts) {
+            alert("KaiKas 확장 프로그램을 활성화 해주세요!");
+          }
+          check_status();
+        } catch (e) {
           alert("KaiKas 확장 프로그램을 활성화 해주세요!");
         }
-        check_status();
       });
     </script>
   </body>

@@ -16,12 +16,35 @@ function isWhitelist(_inputAddress) {
     data: { data: _inputAddress },
     success: function (result) {
       if (result.result == "true") {
+        booldata = true;
         window.alert("화리 인증 완료!");
       } else {
+        booldata = false;
         window.alert("화리 미등록 계정입니다!!");
       }
     },
   });
+  return booldata;
+}
+
+function isSpecial(_inputAddress) {
+  let booldata;
+  $.ajax({
+    url: "/checkwhitelist",
+    dataType: "json",
+    type: "POST",
+    data: { data: _inputAddress },
+    success: function (result) {
+      if (result.result == "true") {
+        booldata = true;
+        window.alert("스페셜리스트 인증 완료!");
+      } else {
+        booldata = false;
+        window.alert("스페셜리스트 미등록 계정입니다!!");
+      }
+    },
+  });
+  return booldata;
 }
 
 function cntBlockNumber() {
@@ -46,6 +69,7 @@ async function connect() {
     return;
   }
   account = accounts[0];
+  console.log(!account);
   caver.klay.getBalance(account).then(function (balance) {
     document.getElementById("myWallet").innerHTML = `지갑주소: ${account}`;
     document.getElementById("myKlay").innerHTML = `잔액: ${caver.utils.fromPeb(
@@ -104,17 +128,6 @@ async function publicMint() {
     alert("ERROR: 지갑을 연결해주세요!");
     return;
   }
-  let randomInt = 0;
-  $.ajax({
-    url: "/randomint",
-    dataType: "json",
-    type: "POST",
-    success: function (result) {
-      randomInt = parseInt(result.result);
-      console.log(randomInt);
-    },
-  });
-
   const myContract = new caver.klay.Contract(ABI, CONTRACTADDRESS);
   const amount = document.getElementById("amount").value;
   await check_status();
@@ -130,7 +143,7 @@ async function publicMint() {
   let estmated_gas;
 
   await myContract.methods
-    .publicMint(amount, randomInt)
+    .publicMint(amount)
     .estimateGas({
       from: account,
       gas: 6000000,
@@ -140,7 +153,7 @@ async function publicMint() {
       estmated_gas = gasAmount;
       console.log("gas :" + estmated_gas);
       myContract.methods
-        .publicMint(amount, randomInt)
+        .publicMint(amount)
         .send({
           from: account,
           gas: estmated_gas,
@@ -156,15 +169,141 @@ async function publicMint() {
           console.log(transferEvent);
         })
         .once("receipt", (receipt) => {
-          $.ajax({
-            url: "/randomint",
-            dataType: "json",
-            type: "POST",
-            success: function (result) {
-              randomInt = parseInt(result.result);
-              console.log(randomInt);
-            },
-          });
+          alert("민팅에 성공하였습니다.");
+        })
+        .on("error", (error) => {
+          alert("민팅에 실패하였습니다.");
+          console.log(error);
+        });
+    })
+    .catch(function (error) {
+      console.log(error);
+      alert("민팅에 실패하였습니다.");
+    });
+    await check_status();
+}
+
+async function whitelistMint() {
+  if (klaytn.networkVersion === 8217) {
+    console.log("메인넷");
+  } else if (klaytn.networkVersion === 1001) {
+    console.log("테스트넷");
+  } else {
+    alert("ERROR: 클레이튼 네트워크로 연결되지 않았습니다!");
+    return;
+  }
+  if (!account) {
+    alert("ERROR: 지갑을 연결해주세요!");
+    return;
+  }
+  const myContract = new caver.klay.Contract(ABI, CONTRACTADDRESS);
+  const amount = document.getElementById("amount").value;
+  await check_status();
+  if (maxSaleAmount + 1 <= mintIndexForSale) {
+    alert("모든 물량이 소진되었습니다.");
+    return;
+  } else if (blockNumber <= mintStartBlockNumber) {
+    alert("아직 민팅이 시작되지 않았습니다.");
+    return;
+  }
+  const total_value = amount * mintPrice;
+
+  let estmated_gas;
+
+  await myContract.methods
+    .publicMint(amount)
+    .estimateGas({
+      from: account,
+      gas: 6000000,
+      value: total_value,
+    })
+    .then(function (gasAmount) {
+      estmated_gas = gasAmount;
+      console.log("gas :" + estmated_gas);
+      myContract.methods
+        .publicMint(amount)
+        .send({
+          from: account,
+          gas: estmated_gas,
+          value: total_value,
+        })
+        .on("transactionHash", (txid) => {
+          console.log(txid);
+        })
+        .once("allEvents", (allEvents) => {
+          console.log(allEvents);
+        })
+        .once("Transfer", (transferEvent) => {
+          console.log(transferEvent);
+        })
+        .once("receipt", (receipt) => {
+          alert("민팅에 성공하였습니다.");
+        })
+        .on("error", (error) => {
+          alert("민팅에 실패하였습니다.");
+          console.log(error);
+        });
+    })
+    .catch(function (error) {
+      console.log(error);
+      alert("민팅에 실패하였습니다.");
+    });
+}
+
+async function specialMint() {
+  if (klaytn.networkVersion === 8217) {
+    console.log("메인넷");
+  } else if (klaytn.networkVersion === 1001) {
+    console.log("테스트넷");
+  } else {
+    alert("ERROR: 클레이튼 네트워크로 연결되지 않았습니다!");
+    return;
+  }
+  if (!account) {
+    alert("ERROR: 지갑을 연결해주세요!");
+    return;
+  }
+  const myContract = new caver.klay.Contract(ABI, CONTRACTADDRESS);
+  const amount = document.getElementById("amount").value;
+  await check_status();
+  if (maxSaleAmount + 1 <= mintIndexForSale) {
+    alert("모든 물량이 소진되었습니다.");
+    return;
+  } else if (blockNumber <= mintStartBlockNumber) {
+    alert("아직 민팅이 시작되지 않았습니다.");
+    return;
+  }
+  const total_value = amount * mintPrice;
+
+  let estmated_gas;
+
+  await myContract.methods
+    .publicMint(amount)
+    .estimateGas({
+      from: account,
+      gas: 6000000,
+      value: total_value,
+    })
+    .then(function (gasAmount) {
+      estmated_gas = gasAmount;
+      console.log("gas :" + estmated_gas);
+      myContract.methods
+        .publicMint(amount)
+        .send({
+          from: account,
+          gas: estmated_gas,
+          value: total_value,
+        })
+        .on("transactionHash", (txid) => {
+          console.log(txid);
+        })
+        .once("allEvents", (allEvents) => {
+          console.log(allEvents);
+        })
+        .once("Transfer", (transferEvent) => {
+          console.log(transferEvent);
+        })
+        .once("receipt", (receipt) => {
           alert("민팅에 성공하였습니다.");
         })
         .on("error", (error) => {
@@ -243,21 +382,6 @@ async function airDrop() {
       alert("민팅에 실패하였습니다.");
     });
 }
-
-async function add_whitelist() {
-  const _address = document.getElementById("whitelist").value;
-  console.log(klaytn);
-
-  //Ajax POST Method TEST
-  $.ajax({
-    url: "/addwhitelist",
-    dataType: "json",
-    type: "POST",
-    data: { data: _address, data2: klaytn.selectedAddress },
-    success: function (result) {
-      console.log(result);
-    },
-  });
   /*
   const myContract = new caver.klay.Contract(ABI, CONTRACTADDRESS);
   await myContract.methods
