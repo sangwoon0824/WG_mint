@@ -2,7 +2,7 @@
   "name": "klaytn-minting-website-main",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "remix": "remixd -s C:/Users/sangw/Desktop/WG/project/WG-contract-main --remix-ide https://ide.klaytn.com"

@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WeatherGirls Minitng</title>
-    <script src="http://localhost:8080/js/config.js"></script>
-    <script src="http://localhost:8080/js/mintScript.js"></script>
+    <script src="https://mint.klayweathergirls.com//js/config.js"></script>
+    <script src="https://mint.klayweathergirls.com//js/mintScript.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.6.0.js"
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -55,7 +55,6 @@
           }
           check_status();
         } catch (e) {
-          console.log(e);
           if (String(e) == "ReferenceError: klaytn is not defined") {
             alert("KaiKas 확장 프로그램을 설치 해주세요!");
             window.location =
