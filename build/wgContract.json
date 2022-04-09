@@ -1,6 +1,6 @@
 {
   "contractName": "wgContract",
-  "address": "0x055efFa3B83D5385f79A3eA50f33abDCda355d9a",
+  "address": "0xD43663Db0fc397a4D6188A4a66afC518FAfA9049",
   "abi": [
     {
       "constant": false,
@@ -456,6 +456,21 @@
       "inputs": [
         {
           "internalType": "uint256",
+          "name": "_newRound",
+          "type": "uint256"
+        }
+      ],
+      "name": "setRound",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "uint256",
           "name": "newAntibotInterval",
           "type": "uint256"
         },
@@ -526,21 +541,6 @@
         }
       ],
       "name": "setWhitelistMintEnabled",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_newApprove",
-          "type": "uint256"
-        }
-      ],
-      "name": "setWHL",
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
@@ -639,11 +639,6 @@
         {
           "internalType": "uint256",
           "name": "requestedCount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "approve",
           "type": "uint256"
         }
       ],
@@ -793,9 +788,9 @@
       "name": "mintingInformation",
       "outputs": [
         {
-          "internalType": "uint256[7]",
+          "internalType": "uint256[8]",
           "name": "",
-          "type": "uint256[7]"
+          "type": "uint256[8]"
         }
       ],
       "payable": false,

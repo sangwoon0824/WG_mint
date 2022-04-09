@@ -1,4 +1,4 @@
-const CONTRACTADDRESS = "0xa672e250F6907E7FC64b851ec8Ce87a5c36c2F3d";
+const CONTRACTADDRESS = "0xD43663Db0fc397a4D6188A4a66afC518FAfA9049";
 const ABI = [
   {
     constant: false,
@@ -112,46 +112,6 @@ const ABI = [
     type: "function",
   },
   {
-    constant: false,
-    inputs: [
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "tokenURI",
-        type: "string",
-      },
-    ],
-    name: "mintWithTokenURI",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    constant: false,
-    inputs: [],
-    name: "pause",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "string",
@@ -245,6 +205,37 @@ const ABI = [
     type: "event",
   },
   {
+    constant: false,
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "tokenURI",
+        type: "string",
+      },
+    ],
+    name: "mintWithTokenURI",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -262,6 +253,15 @@ const ABI = [
     ],
     name: "OwnershipTransferred",
     type: "event",
+  },
+  {
+    constant: false,
+    inputs: [],
+    name: "pause",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
     anonymous: false,
@@ -308,11 +308,6 @@ const ABI = [
       {
         internalType: "uint256",
         name: "requestedCount",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "randomTokenId",
         type: "uint256",
       },
     ],
@@ -443,57 +438,27 @@ const ABI = [
     constant: false,
     inputs: [
       {
-        internalType: "string",
-        name: "_newBaseURI",
-        type: "string",
-      },
-    ],
-    name: "setBaseURI",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    constant: false,
-    inputs: [
-      {
-        internalType: "bytes32",
-        name: "_merkleRoot",
-        type: "bytes32",
-      },
-    ],
-    name: "setMerkleRoot",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    constant: false,
-    inputs: [
-      {
-        internalType: "string",
-        name: "_newNotRevealedURI",
-        type: "string",
-      },
-    ],
-    name: "setNotRevealedURI",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    constant: false,
-    inputs: [
-      {
         internalType: "bool",
         name: "_state",
         type: "bool",
       },
     ],
     name: "setPublicMintEnabled",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_newRound",
+        type: "uint256",
+      },
+    ],
+    name: "setRound",
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
@@ -539,6 +504,26 @@ const ABI = [
       },
     ],
     name: "setupSale",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        internalType: "string",
+        name: "_newBaseURI",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_newNotRevealedURI",
+        type: "string",
+      },
+    ],
+    name: "setURI",
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
@@ -653,11 +638,6 @@ const ABI = [
         internalType: "uint256",
         name: "requestedCount",
         type: "uint256",
-      },
-      {
-        internalType: "bytes32[]",
-        name: "_merkleProof",
-        type: "bytes32[]",
       },
     ],
     name: "whitelistMint",
@@ -803,27 +783,12 @@ const ABI = [
   {
     constant: true,
     inputs: [],
-    name: "merkleRoot",
-    outputs: [
-      {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32",
-      },
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    constant: true,
-    inputs: [],
     name: "mintingInformation",
     outputs: [
       {
-        internalType: "uint256[7]",
+        internalType: "uint256[8]",
         name: "",
-        type: "uint256[7]",
+        type: "uint256[8]",
       },
     ],
     payable: false,
@@ -1039,21 +1004,6 @@ const ABI = [
         internalType: "uint256",
         name: "",
         type: "uint256",
-      },
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "whitelistMintEnabled",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
       },
     ],
     payable: false,

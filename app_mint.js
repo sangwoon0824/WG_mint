@@ -8,11 +8,11 @@ const fs = require("fs");
 const limit = require("express-rate-limit");
 const Caver = require("caver-js");
 const CONTRACT = require("./build/wgContract.json");
-const { pkey, addr } = require("./secret.js");
+const { pkey, addr } = require("./dataset/secret.js");
 const bodyParser = require("body-parser");
 const { stringify } = require("querystring");
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.engine("html", require("ejs").renderFile);
 app.set("view engine", "ejs");
@@ -43,16 +43,12 @@ const port = process.env.PORT || 8888;
 
 //테스트 서버 포트
 //const port = process.env.PORT || 800;
-
+let round = 0;
 //동적 폴더(CSS,JS 로딩 용이)
 app.use(express.static(__dirname + "/public"));
 
 app.get("/", (req, res) => {
   res.render("index.html");
-});
-
-app.get("/admin", (req, res) => {
-  res.render("admin.html");
 });
 
 app.post("/checkwhitelist", (req, res) => {
@@ -62,6 +58,8 @@ app.post("/checkwhitelist", (req, res) => {
 
 app.post("/checkspecial", (req, res) => {
   var data = req.body.data;
+
+  console.log(data);
   res.send({ result: isSpecial(String(data)) });
 });
 
@@ -83,13 +81,13 @@ app.listen(port, (err) => {
 //-------------------------------------------------------------------//
 
 function isWhiteList(_inputAddress) {
-  const article = fs.readFileSync("whitelist.txt");
+  const article = fs.readFileSync("./dataset/whitelist.txt");
   let wlDB = String(article).split("\n");
 
   for (i = 0; i <= wlDB.length; i++) {
     let data = wlDB[i];
-    if (String(data).substr(0, 42) == _inputAddress) {
-      console.log(String(wlDB[i]).substr(0, 42) + " is Whitelist");
+    let dataST = String(data).substr(0, 42);
+    if (String(dataST).toUpperCase() == _inputAddress.toUpperCase()) {
       return true;
     }
     return false;
@@ -97,15 +95,15 @@ function isWhiteList(_inputAddress) {
 }
 
 function isSpecial(_inputAddress) {
-  const article = fs.readFileSync("isSpecial.txt");
+  const article = fs.readFileSync("./dataset/special.txt");
   let spDB = String(article).split("\n");
 
   for (i = 0; i <= spDB.length; i++) {
     let data = spDB[i];
-    if (String(data).substr(0, 42) == _inputAddress) {
-      console.log(String(wlDB[i]).substr(0, 42) + " is special");
+    let dataST = String(data).substr(0, 42);
+    console.log(String(dataST).toUpperCase() == _inputAddress.toUpperCase());
+    if (String(dataST).toUpperCase() == _inputAddress.toUpperCase()) {
       return true;
-    }
-    return false;
+    } else return false;
   }
 }
